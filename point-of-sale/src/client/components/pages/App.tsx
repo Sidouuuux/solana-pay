@@ -15,8 +15,6 @@ import { TransactionsProvider } from '../contexts/TransactionsProvider';
 import { SolanaPayLogo } from '../images/SolanaPayLogo';
 import { SOLIcon } from '../images/SOLIcon';
 import css from './App.module.css';
-import { MAINNET_ENDPOINT, MAINNET_USDC_MINT } from '../../utils/constants';
-import { USDCIcon } from '../images/USDCIcon';
 
 interface AppProps extends NextAppProps {
     host: string;
@@ -50,8 +48,8 @@ const App: FC<AppProps> & { getInitialProps(appContext: AppContext): Promise<App
     );
 
     // Toggle comments on these lines to use transaction requests instead of transfer requests.
-    // const link = undefined;
-    const link = useMemo(() => new URL(`${baseURL}/api/`), [baseURL]);
+    const link = undefined;
+    // const link = useMemo(() => new URL(`${baseURL}/api/`), [baseURL]);
 
     let recipient: PublicKey | undefined = undefined;
     const { recipient: recipientParam, label, message } = query;
@@ -67,7 +65,7 @@ const App: FC<AppProps> & { getInitialProps(appContext: AppContext): Promise<App
         <ThemeProvider>
             <FullscreenProvider>
                 {recipient && label ? (
-                    <ConnectionProvider endpoint={MAINNET_ENDPOINT}>
+                    <ConnectionProvider endpoint={DEVNET_ENDPOINT}>
                         <WalletProvider wallets={wallets} autoConnect={connectWallet}>
                             <WalletModalProvider>
                                 <ConfigProvider
@@ -76,11 +74,10 @@ const App: FC<AppProps> & { getInitialProps(appContext: AppContext): Promise<App
                                     recipient={recipient}
                                     label={label}
                                     message={message}
-                                    splToken={MAINNET_USDC_MINT}
-                                    symbol="USDC"
-                                    icon={<USDCIcon />}
-                                    decimals={6}
-                                    minDecimals={2}
+                                    symbol="SOL"
+                                    icon={<SOLIcon />}
+                                    decimals={9}
+                                    minDecimals={1}
                                     connectWallet={connectWallet}
                                 >
                                     <TransactionsProvider>
